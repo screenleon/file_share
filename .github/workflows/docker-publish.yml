@@ -57,6 +57,18 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
 
+      - name: Check tag does not already exist on Docker Hub
+        if: github.ref_type == 'tag'
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://hub.docker.com/v2/repositories/screenleon/file-share/tags/${TAG}/")
+          if [ "$STATUS" = "200" ]; then
+            echo "::error::Tag ${TAG} already exists on Docker Hub. Bump the version before releasing."
+            exit 1
+          fi
+          echo "Tag ${TAG} is new — proceeding with publish."
+
       - name: Build and push (linux/amd64 + linux/arm64)
         uses: docker/build-push-action@v6
         with:
