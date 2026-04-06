@@ -1,6 +1,28 @@
 # File Share - 區域網路檔案分享服務
 
+[![Docker Hub](https://img.shields.io/docker/v/screenleon/file-share?label=Docker%20Hub&logo=docker)](https://hub.docker.com/r/screenleon/file-share)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 區域網路內的串流檔案上下傳服務。A 上傳檔案，B 即可下載。
+
+## 快速啟動（Docker Hub，無需 Clone）
+
+```bash
+docker run -d -p 80:80 --name file-share screenleon/file-share
+```
+
+瀏覽器開啟 `http://<你的IP>` 即可使用。
+
+> 停止時會自動清理所有上傳的檔案：
+> ```bash
+> docker stop file-share && docker rm file-share
+> ```
+> 若需要永久保留上傳檔案，掛載 volume：
+> ```bash
+> docker run -d -p 80:80 -v fileshare_data:/app/uploads --name file-share screenleon/file-share
+> ```
+
+## 從原始碼啟動（Docker Compose）
 
 ## 啟動
 
