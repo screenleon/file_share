@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Share - 區域網路檔案分享</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📁 File Share</h1>
+            <p class="subtitle">區域網路檔案分享服務</p>
+        </header>
+
+        <section class="upload-section">
+            <div class="upload-area" id="dropZone">
+                <div class="upload-icon">⬆️</div>
+                <p>拖曳檔案到此處，或點擊選擇檔案</p>
+                <p class="hint">支援大型檔案（串流上傳，不限大小）</p>
+                <input type="file" id="fileInput" multiple hidden>
+            </div>
+            <div id="uploadProgress" class="progress-container" hidden>
+                <div class="progress-info">
+                    <span id="uploadFileName"></span>
+                    <span id="uploadPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-details">
+                    <span id="uploadSpeed"></span>
+                    <span id="uploadSize"></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="files-section">
+            <div class="files-header">
+                <h2>已上傳的檔案</h2>
+                <button class="btn btn-refresh" onclick="loadFiles()">🔄 重新整理</button>
+            </div>
+            <div id="fileList" class="file-list">
+                <p class="empty-message">尚無檔案</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

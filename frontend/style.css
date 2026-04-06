@@ -1,0 +1,289 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    font-size: 2rem;
+    color: #f8fafc;
+    margin-bottom: 0.25rem;
+}
+
+.subtitle {
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+
+/* Upload Area */
+.upload-section {
+    margin-bottom: 2rem;
+}
+
+.upload-area {
+    border: 2px dashed #334155;
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #1e293b;
+}
+
+.upload-area:hover,
+.upload-area.dragover {
+    border-color: #3b82f6;
+    background: #1e3a5f;
+}
+
+.upload-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.upload-area p {
+    color: #cbd5e1;
+    margin-bottom: 0.25rem;
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: #64748b !important;
+}
+
+/* Progress */
+.progress-container {
+    margin-top: 1rem;
+    background: #1e293b;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.progress-bar {
+    background: #334155;
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    height: 100%;
+    width: 0%;
+    transition: width 0.2s;
+    border-radius: 4px;
+}
+
+.progress-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+/* Files List */
+.files-section {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.files-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.files-header h2 {
+    font-size: 1.2rem;
+    color: #f1f5f9;
+}
+
+.file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: #0f172a;
+    border-radius: 8px;
+    transition: background 0.15s;
+}
+
+.file-item:hover {
+    background: #1a2744;
+}
+
+.file-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+}
+
+.file-name {
+    font-weight: 500;
+    color: #e2e8f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-name-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+}
+
+.file-status {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.status-ready {
+    background: #166534;
+    color: #bbf7d0;
+}
+
+.status-uploading {
+    background: #854d0e;
+    color: #fef08a;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+.file-uploading {
+    border: 1px solid #854d0e;
+    opacity: 0.85;
+}
+
+.btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.file-meta {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 0.15rem;
+}
+
+.file-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 1rem;
+    flex-shrink: 0;
+}
+
+/* Buttons */
+.btn {
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.15s;
+}
+
+.btn-download {
+    background: #3b82f6;
+    color: white;
+    text-decoration: none;
+}
+
+.btn-download:hover {
+    background: #2563eb;
+}
+
+.btn-delete {
+    background: #dc2626;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #b91c1c;
+}
+
+.btn-refresh {
+    background: #334155;
+    color: #e2e8f0;
+}
+
+.btn-refresh:hover {
+    background: #475569;
+}
+
+.empty-message {
+    text-align: center;
+    color: #64748b;
+    padding: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .upload-area {
+        padding: 2rem 1rem;
+    }
+
+    .file-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .file-actions {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .file-actions .btn {
+        flex: 1;
+        text-align: center;
+    }
+}
