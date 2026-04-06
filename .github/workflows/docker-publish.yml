@@ -8,7 +8,29 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  # PR: fast single-arch build — verify the image compiles, no push
+  build-check:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build (linux/amd64 only)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64
+          push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # main / tag push: multi-arch build + push to Docker Hub
+  publish:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,12 +38,10 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to Docker Hub
-        if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -36,14 +56,25 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-            type=ref,event=pr
 
-      - name: Build and push
+      - name: Check tag does not already exist on Docker Hub
+        if: github.ref_type == 'tag'
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://hub.docker.com/v2/repositories/screenleon/file-share/tags/${TAG}/")
+          if [ "$STATUS" = "200" ]; then
+            echo "::error::Tag ${TAG} already exists on Docker Hub. Bump the version before releasing."
+            exit 1
+          fi
+          echo "Tag ${TAG} is new — proceeding with publish."
+
+      - name: Build and push (linux/amd64 + linux/arm64)
         uses: docker/build-push-action@v6
         with:
           context: .
           platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
